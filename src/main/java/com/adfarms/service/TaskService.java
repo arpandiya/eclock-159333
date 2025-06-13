@@ -31,6 +31,7 @@ public class TaskService {
 
     public void updateTaskStatus(Long id, TaskStatus status) {
         taskRepository.findById(id).ifPresent(task -> task.setStatus(status));
+        taskRepository.save(taskRepository.findById(id).get());
     }
 
     public TaskEntity findById(Long id) {
@@ -45,6 +46,9 @@ public class TaskService {
         }
         return "Task not found ! ";
     }
+
+
+
 
 
 }

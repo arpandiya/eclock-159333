@@ -72,29 +72,43 @@ public class EmployeeController {
         return "employee/task-list";
     }
 
-    @GetMapping("/tasks/{id}/edit")
-    public String showUpdateTaskForm(@PathVariable Long id, Model model, Authentication authentication) {
-        EmployeeEntity employee = (EmployeeEntity) authentication.getPrincipal();
-        TaskEntity task = taskService.findById(id);
-        logger.warn("Task ID: {}, Employee ID: {}", id, employee.getId());
-
-        if (task != null && task.getAssignee().equals(employee)) {
-            model.addAttribute("task", task);
-            return "employee/edit-task";
-        }
-        return "redirect:/employee/";
-    }
+//    @GetMapping("/tasks/{id}/edit")
+//    public String showUpdateTaskForm(@PathVariable Long id, Model model, Authentication authentication) {
+//        EmployeeEntity employee = (EmployeeEntity) authentication.getPrincipal();
+//        TaskEntity task = taskService.findById(id);
+//        logger.warn("Task ID: {}, Employee ID: {}", id, employee.getId());
+//
+//        if (task != null && task.getAssignee().equals(employee)) {
+//            model.addAttribute("task", task);
+//            return "employee/edit-task";
+//        }
+//        return "redirect:/employee/";
+//    }
 
     @PostMapping("/tasks/{id}/update")
-    public String updateTaskStatus(@PathVariable Long id, @ModelAttribute("task") TaskStatus status, Authentication authentication) {
+    public String updateTaskStatus(@ModelAttribute("task") TaskEntity taskEntity, @PathVariable("id") Long id, @RequestParam TaskStatus status, Authentication authentication) {
         EmployeeEntity employee = (EmployeeEntity) authentication.getPrincipal();
         TaskEntity task = taskService.findById(id);
-        if(task != null && task.getAssignee().equals(employee)) {
+
             taskService.updateTaskStatus(id, status);
-        }
+
 
         return "redirect:/employee/";
     }
+
+//    @PatchMapping("/tasks/{id}/update")
+//    public String updateTaskStatus(@PathVariable Long id, @RequestParam("status") String status, Authentication authentication) {
+//        EmployeeEntity employee = (EmployeeEntity) authentication.getPrincipal();
+//        TaskEntity task = taskService.findById(id);
+//        if(task != null && task.getAssignee().equals(employee)) {
+//            // You might need to convert the String 'status' to your TaskStatus enum/object
+//            // For example, if TaskStatus is an enum:
+//            TaskStatus newStatus = TaskStatus.valueOf(status);
+//            taskService.updateTaskStatus(id, newStatus);
+//        }
+//
+//        return "redirect:/employee/";
+//    }
 
 
 }

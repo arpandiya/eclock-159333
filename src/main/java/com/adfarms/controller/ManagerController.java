@@ -14,6 +14,7 @@ import com.adfarms.service.BranchService;
 import com.adfarms.service.EmployeeService;
 import com.adfarms.service.TaskService;
 import com.adfarms.service.TimesheetService;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -163,10 +165,11 @@ public class ManagerController {
         return "redirect:/manager/timesheets/pending";
     }
 
-    @DeleteMapping("/task/{id}/delete")
-    public String deleteTask(@PathVariable Long id) {
+    @Transactional
+    @GetMapping("/tasks/{id}/delete")
+    public String deleteTask(@PathVariable("id") Long id, Authentication authentication) {
         taskService.deleteTaskEntityById(id);
-        return "redirect:/manager/";
+        return "redirect:/managers/";
 
     }
 }

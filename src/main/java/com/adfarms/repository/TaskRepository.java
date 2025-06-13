@@ -9,6 +9,6 @@ import java.util.List;
 public interface TaskRepository extends JpaRepository<TaskEntity, Long> {
     List<TaskEntity> findByAssignee(EmployeeEntity assignee);
     List<TaskEntity> findByAssigner(EmployeeEntity assigner);
-    String deleteTaskEntityById(Long id);
+    void deleteTaskEntityById(Long id);
 
 }
