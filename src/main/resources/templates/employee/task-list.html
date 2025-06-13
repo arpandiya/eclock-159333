@@ -23,12 +23,14 @@
       <td th:text="${task.status}"></td>
       <td>
         <form th:action="@{/employee/tasks/{id}/update(id=${task.id})}" method="post">
-          <select name="status" class="form-control d-inline w-auto">
-            <option value="NOT_STARTED">Not Started</option>
-            <option value="IN_PROGRESS">In Progress</option>
-            <option value="COMPLETED">Completed</option>
-          </select>
-          <button type="submit" class="btn btn-primary">Update</button>
+          <label>
+            <select name="status" class="form-control d-inline w-auto">
+              <option value="NOT_STARTED">Not Started</option>
+              <option value="IN_PROGRESS">In Progress</option>
+              <option value="COMPLETED">Completed</option>
+            </select>
+          </label>
+          <input type="submit" class="btn btn-primary" value="Update" />
         </form>
       </td>
     </tr>

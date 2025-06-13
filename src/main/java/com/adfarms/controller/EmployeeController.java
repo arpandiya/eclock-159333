@@ -8,6 +8,8 @@ import com.adfarms.enums.TaskStatus;
 import com.adfarms.enums.TimesheetStatus;
 import com.adfarms.service.TaskService;
 import com.adfarms.service.TimesheetService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,8 @@ import java.time.Duration;
 @Controller
 @RequestMapping("/employee")
 public class EmployeeController {
+
+    private static final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
     @Autowired
     private TimesheetService timesheetService;
     @Autowired
@@ -68,17 +72,29 @@ public class EmployeeController {
         return "employee/task-list";
     }
 
+    @GetMapping("/tasks/{id}/edit")
+    public String showUpdateTaskForm(@PathVariable Long id, Model model, Authentication authentication) {
+        EmployeeEntity employee = (EmployeeEntity) authentication.getPrincipal();
+        TaskEntity task = taskService.findById(id);
+        logger.warn("Task ID: {}, Employee ID: {}", id, employee.getId());
+
+        if (task != null && task.getAssignee().equals(employee)) {
+            model.addAttribute("task", task);
+            return "employee/edit-task";
+        }
+        return "redirect:/employee/";
+    }
+
     @PostMapping("/tasks/{id}/update")
-    public String updateTaskStatus(@PathVariable Long id, @RequestParam TaskStatus status, Authentication authentication) {
+    public String updateTaskStatus(@PathVariable Long id, @ModelAttribute("task") TaskStatus status, Authentication authentication) {
         EmployeeEntity employee = (EmployeeEntity) authentication.getPrincipal();
         TaskEntity task = taskService.findById(id);
         if(task != null && task.getAssignee().equals(employee)) {
-            String statusString = status.toString();
-            task.setStatus(status);
-            taskService.save(task);
-
+            taskService.updateTaskStatus(id, status);
         }
 
         return "redirect:/employee/";
     }
+
+
 }
