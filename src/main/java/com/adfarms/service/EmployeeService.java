@@ -50,5 +50,9 @@ public class EmployeeService implements UserDetailsService {
         return employeeRepository.findAll();
     }
 
+    public void deleteById(Long id) {
+        employeeRepository.deleteById(id);
+    }
+
 
 }

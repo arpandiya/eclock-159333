@@ -7,38 +7,48 @@
 <head>
   <meta charset="UTF-8">
   <title>Fragments</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Matangi:wght@300..900&display=swap" rel="stylesheet">
 </head>
-<body>
+<body style="font-family: 'Matangi', cursive;">
 <!-- Navigation Bar Fragment -->
-<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
-  <div class="container-fluid px-5" style="min-height: 100px;">
-    <a class="navbar-brand shadow text-bold" href="#" style="margin-left: 20px; font-size: 30px;">eClock</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+<nav th:fragment="navbar" class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark" style="height: 100px;">
+  <div class="container-fluid d-flex justify-content-around">
+    <div>
+    <a class="navbar-brand" href="#">eClock</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav  mb-2 mb-lg-0 " style="margin-left: 50vw;" >
+    </div>
+    <div>
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link" th:href="@{/employee/}" sec:authorize="isAuthenticated()">Dashboard</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" th:href="@{/tasks/}" sec:authorize="isAuthenticated()">Tasks</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" th:href="@{/timesheet/}" sec:authorize="isAuthenticated()">Timesheet</a>
-        </li>
-      </ul>
-      <ul class="navbar-nav" style="margin-left: 100px;">
-        <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
-          <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <span sec:authentication="name">Guest User</span>
+          <a class="nav-link active" href="#">Home
+            <span class="visually-hidden">(current)</span>
           </a>
-
         </li>
-        <li class="nav-item" sec:authorize="!isAuthenticated()">
-          <a class="nav-link btn btn-primary btn-sm text-white" th:href="@{/login}">Login</a>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Timesheet</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Task</a>
+        </li>
+
+        <li class="nav-item dropdown ml-auto">
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Profile</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Guest User</a>
+
+
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+          </div>
         </li>
       </ul>
+    </div>
     </div>
   </div>
 </nav>
@@ -53,4 +63,4 @@
 
 
 </body>
-</html>
+

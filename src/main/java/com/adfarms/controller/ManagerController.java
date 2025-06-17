@@ -54,11 +54,12 @@ public class ManagerController {
         EmployeeEntity manager = (EmployeeEntity) authentication.getPrincipal();
         model.addAttribute("tasks", taskService.findByAssigner(manager));
         model.addAttribute("timesheets", timesheetService.findByEmployeeBranch(manager.getBranch()));
+        model.addAttribute("employees", employeeService.findByBranchAndRole(manager.getBranch(), Role.EMPLOYEE));
         return "manager/manager-dashboard";
     }
     @GetMapping("/new")
     public String showEmployeeForm(Model model, Authentication authentication) {
-        model.addAttribute("empForm", new EmployeeForm());
+
 
         // Check if branches exist
         if (branchService.findAll().isEmpty()) {
@@ -94,7 +95,7 @@ public class ManagerController {
         }
         logger.debug("Setting branchId: {} in model", branchId);
         model.addAttribute("branchId", branchId);
-
+        model.addAttribute("empForm", new EmployeeForm());
         return "manager/employee-form";
     }
 
@@ -107,11 +108,11 @@ public class ManagerController {
         empEntity.setEmail(employeeForm.getEmail());
         empEntity.setPassword(passwordEncoder.encode(employeeForm.getPassword()));
         empEntity.setRole(Role.EMPLOYEE);
-        empEntity.setBranch(branchService.findById(employeeForm.getBranchId()));
+        empEntity.setBranch(manager.getBranch());
 
 
         employeeService.save(empEntity);
-        return "redirect:/managers/timesheets/pending";
+        return "redirect:/managers/";
     }
 
 
@@ -162,8 +163,19 @@ public class ManagerController {
         newTask.setStatus(TaskStatus.NOT_STARTED);
 
         taskService.save(newTask);
-        return "redirect:/manager/timesheets/pending";
+        return "redirect:/managers/";
     }
+
+    @PostMapping("/tasks/{id}/update")
+    public String updateTaskStatus(@ModelAttribute("task") TaskEntity taskEntity, @PathVariable("id") Long id, @RequestParam TaskStatus status, Authentication authentication) {
+        TaskEntity task = taskService.findById(id);
+
+        EmployeeEntity user = (EmployeeEntity) authentication.getPrincipal();
+        taskService.updateTaskStatus(id, status);
+        return "redirect:/managers/";
+    }
+
+
 
     @Transactional
     @GetMapping("/tasks/{id}/delete")

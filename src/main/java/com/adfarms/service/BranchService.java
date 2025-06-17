@@ -23,4 +23,8 @@ public class BranchService {
     public BranchEntity findById(Long id) {
         return branchRepository.findById(id).orElse(null);
     }
+
+    public void deleteById(Long id) {
+        branchRepository.deleteById(id);
+    }
 }

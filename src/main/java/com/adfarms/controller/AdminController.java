@@ -6,14 +6,16 @@ import com.adfarms.entity.EmployeeEntity;
 import com.adfarms.enums.Role;
 import com.adfarms.service.BranchService;
 import com.adfarms.service.EmployeeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@Slf4j
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -48,7 +50,7 @@ public class AdminController {
     }
 
     @PostMapping("/managers")
-    public String createManger(EmployeeForm employeeForm) {
+    public String createManager(EmployeeForm employeeForm) {
         BranchEntity branch = branchService.findById(employeeForm.getBranchId());
         EmployeeEntity empEntity = new EmployeeEntity();
         empEntity.setFirstName(employeeForm.getFirstName());
@@ -61,6 +63,36 @@ public class AdminController {
         employeeService.save(empEntity);
 
         return "redirect:/admin/branches";
+    }
+
+
+    @GetMapping("/managers/{id}/edit")
+    public String editManager(@PathVariable("id") Long id, Model model) {
+        EmployeeEntity manager = employeeService.findById(id);
+
+        List<BranchEntity> branches = branchService.findAll();
+        model.addAttribute("manager", manager);
+        model.addAttribute("branches", branches);
+        return "admin/edit-manager";
+    }
+
+    @PostMapping("/managers/{id}/edit")
+    public String updateManager(@PathVariable("id") Long id, @ModelAttribute EmployeeEntity employeeEntity) {
+        EmployeeEntity manager = employeeService.findById(id);
+        manager.setFirstName(employeeEntity.getFirstName());
+        manager.setLastName(employeeEntity.getLastName());
+        manager.setEmail(employeeEntity.getEmail());
+        manager.setPassword(employeeEntity.getPassword());
+        manager.setRole(Role.MANAGER);
+        manager.setBranch(employeeEntity.getBranch());
+        employeeService.save(manager);
+        return "redirect:/admin/";
+    }
+
+    @GetMapping("/managers/{id}/delete")
+    public String deleteManager(@PathVariable("id") Long id) {
+        employeeService.deleteById(id);
+        return "redirect:/admin/";
     }
 
 
@@ -81,6 +113,20 @@ public class AdminController {
         branchService.save(branch);
         return "redirect:/admin/branches";
     }
+
+    @GetMapping("/branches/{id}/edit")
+    public String showBranchEditForm(Model model, @PathVariable Long id) {
+        model.addAttribute("branch", branchService.findById(id));
+        return "admin/edit-branch";
+    }
+
+    @PostMapping("/branches/{id}/edit")
+    public String updateBranch(BranchEntity branch, @PathVariable Long id) {
+        branch.setId(id);
+        branchService.save(branch);
+        return "redirect:/admin/";
+    }
+
 
 
 
