@@ -14,10 +14,10 @@
 
 <div class="card" style="max-width:600px; min-width: 500px;">
     <div class="card-header">
-        <h2>Edit Branch</h2>
+        <h2 class="text-center text-success">Edit Branch</h2>
     </div>
 
-    <form th:action="@{/admin/branches/{id}/edit(id=${branch.id})}" th:object="${branch}" method="POST">
+    <form class="my-4" th:action="@{/admin/branches/{id}/edit(id=${branch.id})}" th:object="${branch}" method="POST">
 
             <input type="hidden" name="id" th:value="${branch.id}">
 
@@ -30,9 +30,9 @@
                 <input type="text" th:field="*{location}" class="form-control"/>
             </div>
         <div class="mb-3 px-4">
-            <button type="submit" class="btn btn-primary">Update</button>
+            <button type="submit" class="btn btn-success">Update</button>
             </div>
-        </div>
+
     </form>
 </div>
 </div>

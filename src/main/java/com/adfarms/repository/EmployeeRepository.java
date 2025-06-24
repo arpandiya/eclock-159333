@@ -11,4 +11,10 @@ public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Long> 
     List<EmployeeEntity> findByBranchAndRole(BranchEntity branch, Role role);
     EmployeeEntity findByEmail(String email);
 
+    List<EmployeeEntity> findEmployeeEntitiesByBranchAndRole(BranchEntity branch, Role role);
+
+    List<EmployeeEntity> findByBranch(BranchEntity branch);
+    List<EmployeeEntity> findByRole(Role role);
+
+    String email(String email);
 }

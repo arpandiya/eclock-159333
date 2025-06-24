@@ -1,6 +1,6 @@
 package com.adfarms.controller;
 
-import com.adfarms.dto.EmployeeForm;
+import com.adfarms.dto.EmployeeDto;
 import com.adfarms.entity.BranchEntity;
 import com.adfarms.entity.EmployeeEntity;
 import com.adfarms.enums.Role;
@@ -8,6 +8,7 @@ import com.adfarms.service.BranchService;
 import com.adfarms.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,7 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequestMapping("/admin")
+
 public class AdminController {
     @Autowired
     private BranchService branchService;
@@ -35,12 +37,12 @@ public class AdminController {
         }
 
         model.addAttribute("branches", branchService.findAll());
-        model.addAttribute("managers", employeeService.findAll());
+        model.addAttribute("managers", employeeService.findEmployeeByRole(Role.MANAGER));
         return "admin/admin-dashboard";
     }
     @GetMapping("/managers/new")
     public String showManagerForm(Model model) {
-        model.addAttribute("employeeForm", new EmployeeForm());
+        model.addAttribute("employeeForm", new EmployeeDto());
         if(branchService.findAll().isEmpty()){
             return "redirect:/admin/branches/new";
         }
@@ -50,13 +52,13 @@ public class AdminController {
     }
 
     @PostMapping("/managers")
-    public String createManager(EmployeeForm employeeForm) {
-        BranchEntity branch = branchService.findById(employeeForm.getBranchId());
+    public String createManager(EmployeeDto employeeDto) {
+        BranchEntity branch = branchService.findById(employeeDto.getBranchId());
         EmployeeEntity empEntity = new EmployeeEntity();
-        empEntity.setFirstName(employeeForm.getFirstName());
-        empEntity.setLastName(employeeForm.getLastName());
-        empEntity.setEmail(employeeForm.getEmail());
-        empEntity.setPassword(passwordEncoder.encode(employeeForm.getPassword()));
+        empEntity.setFirstName(employeeDto.getFirstName());
+        empEntity.setLastName(employeeDto.getLastName());
+        empEntity.setEmail(employeeDto.getEmail());
+        empEntity.setPassword(passwordEncoder.encode(employeeDto.getPassword()));
         empEntity.setRole(Role.MANAGER);
         empEntity.setBranch(branch);
 

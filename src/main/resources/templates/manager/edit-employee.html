@@ -8,13 +8,13 @@
 <div class="container mt-5 d-flex justify-content-center align-items-center" >
   <div class="card" style="max-width:600px; min-width: 500px;">
     <div class="card-header">
-      <h2 class="text-center text-success">Edit Manager</h2>
+      <h2 class="text-center text-success">Edit Employee</h2>
     </div>
 
   <div class="card-body">
 
 
-  <form th:action="@{/admin/managers/{id}/edit(id=${manager.id})}" th:object="${manager}" method="post" class="form">
+  <form th:action="@{/managers/employee/{id}/edit(id=${employee.id})}" th:object="${employee}" method="post" class="form my-2">
 
     <div class="mb-3">
       <label>First Name:</label>
@@ -40,7 +40,7 @@
         <option th:each="branch : ${branches}" th:value="${branch.id}" th:text="${branch.name}"></option>
       </select>
     </div>
-    <button type="submit" class="btn btn-success">Update Manager</button>
+    <button type="submit" class="btn btn-success">Update Employee</button>
   </form>
 </div>
 </div>

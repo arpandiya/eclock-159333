@@ -30,29 +30,32 @@
 <div class="container login__container" style="height: 100vh; display: flex; justify-content: center; align-items: center;">
   <div class="card  w-50 pb-2 " style="min-width: 400px; max-width: 500px; transform: scale(0.8);" >
     <div class="card-header  text-center d-flex align-items-center justify-content-center pt-4">
-      <h2 class="text-center mb-4 text-success text-bold">eClock</h2>
+      <h2 class="text-center mb-4 text-warning text-bold">Error !</h2>
     </div>
 
     <div class="card-body">
+      <section class="page_404">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 ">
+              <div class="col-sm-10 col-sm-offset-1  text-center">
+                <div class="">
+                  <h3 class="text-center">oops...</h3>
+                </div>
+                <div class=" w-100 d-flex flex-column align-items-center justify-content-center ">
+                  <h3 class="h2 text-center">
+                   Something went wrong!
+                  </h3>
+<!--                  <p th:text="${'Error Message - ' + errMsg}"></p>-->
+                  <a th:href="@{/login}" class="btn btn-success my-4">Go to Login</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-    <form th:action="@{/login}" method="post" class="form ">
-      <div class="alert alert-success" role="alert" th:if="${!#strings.isEmpty(errMessage)}"
-          th:text="${errMessage}" />
-
-
-      <div class="mb-3 ">
-        <label class="form-label">Email: </label>
-        <input type="email" name="username" class="form-control " required/>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Password:</label>
-        <input type="password" name="password" class="form-control " required/>
-      </div>
-      <div class="d-grid mt-5 d-flex justify-content-center">
-        <button type="submit" class="btn btn-success w-50 py-3">Login</button>
-      </div>
-    </form>
-  </div>
+    </div>
   </div>
 </div>
 

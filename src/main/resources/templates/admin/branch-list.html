@@ -44,7 +44,7 @@
 </head>
 <body>
 
-<div th:fragment="~{fragments/fragment::navbar}"></div>
+<div th:insert="~{fragments/fragment::navbar}"></div>
 <div class="container mt-5">
   <h2>Branches</h2>
   <a th:href="@{/admin/branches/new}" class="btn btn-primary mb-3">Add Branch</a>

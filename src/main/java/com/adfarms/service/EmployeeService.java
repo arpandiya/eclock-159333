@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class EmployeeService implements UserDetailsService {
     private BranchService branchService;
 
 
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
@@ -29,6 +31,10 @@ public class EmployeeService implements UserDetailsService {
         return employee;
     }
 
+
+    public List<EmployeeEntity> findEmployeesByBranchAndRole(BranchEntity branch, Role role) {
+        return employeeRepository.findEmployeeEntitiesByBranchAndRole(branch, role);
+    }
 
 
     public List<EmployeeEntity> findByBranchAndRole(BranchEntity branch, Role role) {
@@ -52,6 +58,15 @@ public class EmployeeService implements UserDetailsService {
 
     public void deleteById(Long id) {
         employeeRepository.deleteById(id);
+    }
+
+    public boolean changePassword(String email, String oldPassword, String newPassword) {
+        EmployeeEntity employee = employeeRepository.findByEmail(email);
+        return true;
+    }
+
+    public List<EmployeeEntity> findEmployeeByRole(Role role) {
+        return employeeRepository.findByRole(role);
     }
 
 

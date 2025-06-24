@@ -40,7 +40,7 @@ public class EmployeeEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("Role_"+ role.name()));
+        return List.of(new SimpleGrantedAuthority("ROLE_"+ role.name()));
     }
 
     @Override
