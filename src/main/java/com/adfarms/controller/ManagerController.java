@@ -227,6 +227,18 @@ public class ManagerController {
         return "redirect:/managers/";
     }
 
+    @PostMapping("/pending/timesheet/{id}/approve")
+    public String approvePendingTimesheet(@PathVariable Long id, Authentication authentication) {
+        EmployeeEntity employee = (EmployeeEntity) authentication.getPrincipal();
+        TimesheetEntity timesheet = timesheetService.findById(id);
+
+        timesheet.setApprovedBy(employee);
+        timesheetService.updateTimesheetStatus(id, TimesheetStatus.APPROVED);
+
+
+        return "redirect:/managers/timesheet/pending";
+    }
+
 
     @GetMapping("/timesheet/filter")
     public String listFilteredTimesheets(Model model,
