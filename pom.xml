@@ -73,11 +73,19 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+<!--        COMMENT Out Dependency below to use PostGreSQL-->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
+<!--        UN-COMMENT dependency below to use PostGreSQL-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.postgresql</groupId>-->
+        <!--            <artifactId>postgresql</artifactId>-->
+        <!--            <scope>runtime</scope>-->
+        <!--        </dependency>-->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
@@ -88,6 +96,8 @@
             <artifactId>opencsv</artifactId>
             <version>5.11.1</version>
         </dependency>
+
+
     </dependencies>
 
     <build>

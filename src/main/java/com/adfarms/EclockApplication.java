@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AdfarmsApplication {
+public class EclockApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AdfarmsApplication.class, args);
+        SpringApplication.run(EclockApplication.class, args);
     }
 
 }

@@ -1,7 +1,27 @@
 spring:
   application:
     name: eclock
+#uncomment code below to use PostGreSQL database
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/eclock_postgres_db
+#    driver-class-name: org.postgresql.Driver
+#    username: eclock_user
+#    password: eclock@pass
+#
+#    jpa:
+#      show-sql: true
+#      ddl-auto: create-drop
+#
+#      properties:
+#        hibernate:
+#          format_sql: true
+#          dialect: org.hibernate.dialect.PostgreSQLDialect
+#      generate-ddl: true
 
+    thymeleaf:
+      cache: false
+
+      #H2 Database configuration
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:eclock_db

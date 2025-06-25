@@ -42,7 +42,7 @@ public class AdminController {
     }
     @GetMapping("/managers/new")
     public String showManagerForm(Model model) {
-        model.addAttribute("employeeForm", new EmployeeDto());
+        model.addAttribute("employeeDto", new EmployeeDto());
         if(branchService.findAll().isEmpty()){
             return "redirect:/admin/branches/new";
         }

@@ -54,7 +54,7 @@ public class EmployeeController {
         EmployeeEntity employee = (EmployeeEntity) authentication.getPrincipal();
         model.addAttribute("tasks", taskService.findByAssignee(employee));
         model.addAttribute("timesheets", timesheetService.findTimesheetsByEmployee(employee.getId()));
-
+        model.addAttribute("approved", "APPROVED");
         return "employee/employee-dashboard";
     }
 
@@ -252,7 +252,7 @@ public class EmployeeController {
             @RequestParam(name = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam(name = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) throws IOException {
 
-        List<TimesheetEntity> timesheets = timesheetService.findByEmployeeIdAndDateRange( employeeId,startDate, endDate);
+        List<TimesheetEntity> timesheets = timesheetService.findByEmployeeIdAndDateRange(employeeId,startDate, endDate);
 
 
 
